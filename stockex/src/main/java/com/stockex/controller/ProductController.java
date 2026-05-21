@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import com.stockex.model.Product;
 import com.stockex.service.ProductService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -27,12 +29,12 @@ public class ProductController {
 	}
 
 	@PostMapping
-	public Product createProduct(@RequestBody Product product) {
+	public Product createProduct(@Valid @RequestBody Product product) {
 		return productService.createProduct(product);
 	}
 
 	@PutMapping("/{id}")
-	public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
+	public Product updateProduct(@PathVariable Long id, @Valid @RequestBody Product product) {
 		return productService.updateProduct(id, product);
 	}
 

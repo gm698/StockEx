@@ -1,6 +1,9 @@
 package com.stockex.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name = "products")
@@ -10,11 +13,24 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	@NotBlank(message = "Product name is required")
 	private String name;
+
+	@NotBlank(message = "SKU is required")
 	private String sku;
+
+	@NotBlank(message = "Category is required")
 	private String category;
+
+	@Positive(message = "Price must be greater than 0")
 	private double price;
+
+	@PositiveOrZero(message = "Quantity cannot be negative")
 	private int quantity;
+
+	@ManyToOne
+	@JoinColumn(name = "supplier_id")
+	private Supplier supplier;
 
 	public Product() {
 
@@ -74,5 +90,13 @@ public class Product {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
 	}
 }
