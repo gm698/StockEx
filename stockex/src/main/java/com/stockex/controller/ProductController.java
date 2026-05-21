@@ -43,4 +43,10 @@ public class ProductController {
 		productService.deleteProduct(id);
 		return "Product deleted successfully";
 	}
+
+	@PutMapping("/{productId}/supplier/{supplierId}")
+	public Product assignSupplierToProduct(@PathVariable Long productId, @PathVariable Long supplierId) {
+		return productService.assignSupplierToProduct(productId, supplierId);
+	}
+
 }

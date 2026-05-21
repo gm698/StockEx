@@ -5,14 +5,18 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.stockex.model.Product;
+import com.stockex.model.Supplier;
 import com.stockex.repository.ProductRepository;
+import com.stockex.repository.SupplierRepository;
 
 @Service
 public class ProductService {
 	private final ProductRepository productRepository;
+	private final SupplierRepository supplierRepository;
 
-	public ProductService(ProductRepository productRepository) {
+	public ProductService(ProductRepository productRepository, SupplierRepository supplierRepository) {
 		this.productRepository = productRepository;
+		this.supplierRepository = supplierRepository;
 	}
 
 	public List<Product> getAllProducts() {
@@ -44,5 +48,16 @@ public class ProductService {
 	public void deleteProduct(Long id) {
 		Product product = getProductById(id);
 		productRepository.delete(product);
+	}
+
+	public Product assignSupplierToProduct(Long productId, Long supplierId) {
+		Product product = getProductById(productId);
+
+		Supplier supplier = supplierRepository.findById(supplierId)
+				.orElseThrow(() -> new RuntimeException("Supplier not found with id: " + supplierId));
+
+		product.setSupplier(supplier);
+
+		return productRepository.save(product);
 	}
 }
