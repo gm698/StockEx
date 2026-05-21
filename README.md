@@ -53,6 +53,7 @@ This project was created to strengthen backend development skills using Java, Sp
 - JUnit
 - Git
 - GitHub
+- Postman
 
 ---
 
