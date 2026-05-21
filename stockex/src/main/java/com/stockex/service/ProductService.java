@@ -60,4 +60,8 @@ public class ProductService {
 
 		return productRepository.save(product);
 	}
+
+	public Product saveProduct(Product product) {
+		return productRepository.save(product);
+	}
 }

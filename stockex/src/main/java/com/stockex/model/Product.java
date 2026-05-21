@@ -1,5 +1,9 @@
 package com.stockex.model;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -31,6 +35,10 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "supplier_id")
 	private Supplier supplier;
+
+	@OneToMany(mappedBy = "product")
+	@JsonIgnore
+	private List<InventoryTransaction> transactions;
 
 	public Product() {
 
@@ -98,5 +106,13 @@ public class Product {
 
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
+	}
+
+	public List<InventoryTransaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<InventoryTransaction> transactions) {
+		this.transactions = transactions;
 	}
 }
