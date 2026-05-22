@@ -49,4 +49,9 @@ public class ProductController {
 		return productService.assignSupplierToProduct(productId, supplierId);
 	}
 
+	@GetMapping("/low-stock")
+	public List<Product> getLowStockProducts() {
+		return productService.getLowStockProducts();
+	}
+
 }

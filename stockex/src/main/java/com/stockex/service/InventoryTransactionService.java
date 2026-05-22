@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.stockex.enums.TransactionType;
 import com.stockex.model.InventoryTransaction;
 import com.stockex.model.Product;
 import com.stockex.repository.InventoryTransactionRepository;
@@ -25,7 +26,7 @@ public class InventoryTransactionService {
 		product.setQuantity(product.getQuantity() + quantity);
 		productService.saveProduct(product);
 
-		InventoryTransaction transaction = new InventoryTransaction("Restock", quantity, notes, product);
+		InventoryTransaction transaction = new InventoryTransaction(TransactionType.RESTOCK, quantity, notes, product);
 		return transactionRepository.save(transaction);
 	}
 
@@ -39,7 +40,7 @@ public class InventoryTransactionService {
 		product.setQuantity(product.getQuantity() - quantity);
 		productService.saveProduct(product);
 
-		InventoryTransaction transaction = new InventoryTransaction("SALE", quantity, notes, product);
+		InventoryTransaction transaction = new InventoryTransaction(TransactionType.SALE, quantity, notes, product);
 
 		return transactionRepository.save(transaction);
 	}

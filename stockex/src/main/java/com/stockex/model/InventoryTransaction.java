@@ -3,9 +3,10 @@ package com.stockex.model;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.stockex.enums.TransactionType;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 @Entity
@@ -15,8 +16,9 @@ public class InventoryTransaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank(message = "Transaction type is required")
-	private String transactionType;
+	@NotNull(message = "Transaction type is required")
+	@Enumerated(EnumType.STRING)
+	private TransactionType transactionType;
 
 	@Positive(message = "Quantity changed must be greater than 0")
 	private int quantityChanged;
@@ -34,7 +36,7 @@ public class InventoryTransaction {
 		this.transactionDate = LocalDateTime.now();
 	}
 
-	public InventoryTransaction(String transactionType, int quantityChanged, String notes, Product product) {
+	public InventoryTransaction(TransactionType transactionType, int quantityChanged, String notes, Product product) {
 		this.transactionType = transactionType;
 		this.quantityChanged = quantityChanged;
 		this.notes = notes;
@@ -50,11 +52,11 @@ public class InventoryTransaction {
 		this.id = id;
 	}
 
-	public String getTransactionType() {
+	public TransactionType getTransactionType() {
 		return transactionType;
 	}
 
-	public void setTransactionType(String transactionType) {
+	public void setTransactionType(TransactionType transactionType) {
 		this.transactionType = transactionType;
 	}
 
